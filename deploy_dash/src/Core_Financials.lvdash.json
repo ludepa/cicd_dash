@@ -9,6 +9,10 @@
         "dimensions": [
           {
             "expr": "source.*"
+          },
+          {
+            "name": "period_quarter",
+            "expr": "DATE_TRUNC('QUARTER', period_end_date)"
           }
         ],
         "measures": [
@@ -297,6 +301,368 @@
             "y": 7,
             "width": 6,
             "height": 5
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "e072c54e",
+      "displayName": "Drill-Down Detail",
+      "layout": [
+        {
+          "widget": {
+            "name": "header",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Drill-Down Detail\n",
+                "Company-level breakdown: P&L trends, profitability by industry, balance sheet metrics, and entity-level data."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "quarterly_pnl",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "225e5937",
+                  "fields": [
+                    {
+                      "name": "period_quarter",
+                      "expression": "`period_quarter`"
+                    },
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    },
+                    {
+                      "name": "sum(gross_profit)",
+                      "expression": "SUM(`gross_profit`)"
+                    },
+                    {
+                      "name": "sum(net_income)",
+                      "expression": "SUM(`net_income`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Quarterly P&L Trends",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "period_quarter",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fields": [
+                    {
+                      "fieldName": "sum(revenue)",
+                      "displayName": "Revenue"
+                    },
+                    {
+                      "fieldName": "sum(gross_profit)",
+                      "displayName": "Gross Profit"
+                    },
+                    {
+                      "fieldName": "sum(net_income)",
+                      "displayName": "Net Income"
+                    }
+                  ],
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "ebitda_by_industry",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "225e5937",
+                  "fields": [
+                    {
+                      "name": "industry_group_name",
+                      "expression": "`industry_group_name`"
+                    },
+                    {
+                      "name": "avg(ebitda_margin)",
+                      "expression": "AVG(`ebitda_margin`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "EBITDA Margin by Industry Group",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "industry_group_name",
+                  "axis": {
+                    "labelAngle": 45
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg(ebitda_margin)",
+                  "format": {
+                    "type": "number-percent"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "roe_roa_by_sector",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "225e5937",
+                  "fields": [
+                    {
+                      "name": "gics_sector",
+                      "expression": "`gics_sector`"
+                    },
+                    {
+                      "name": "avg(roe)",
+                      "expression": "AVG(`roe`)"
+                    },
+                    {
+                      "name": "avg(roa)",
+                      "expression": "AVG(`roa`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "ROE & ROA by Sector",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "gics_sector",
+                  "axis": {
+                    "labelAngle": 45
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fields": [
+                    {
+                      "fieldName": "avg(roe)",
+                      "displayName": "Avg ROE"
+                    },
+                    {
+                      "fieldName": "avg(roa)",
+                      "displayName": "Avg ROA"
+                    }
+                  ],
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "format": {
+                    "type": "number-percent"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "entity_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "225e5937",
+                  "fields": [
+                    {
+                      "name": "entity_name",
+                      "expression": "`entity_name`"
+                    },
+                    {
+                      "name": "gics_sector",
+                      "expression": "`gics_sector`"
+                    },
+                    {
+                      "name": "region",
+                      "expression": "`region`"
+                    },
+                    {
+                      "name": "fiscal_year",
+                      "expression": "`fiscal_year`"
+                    },
+                    {
+                      "name": "fiscal_quarter",
+                      "expression": "`fiscal_quarter`"
+                    },
+                    {
+                      "name": "revenue",
+                      "expression": "`revenue`"
+                    },
+                    {
+                      "name": "gross_margin",
+                      "expression": "`gross_margin`"
+                    },
+                    {
+                      "name": "ebitda_margin",
+                      "expression": "`ebitda_margin`"
+                    },
+                    {
+                      "name": "net_margin",
+                      "expression": "`net_margin`"
+                    },
+                    {
+                      "name": "free_cash_flow",
+                      "expression": "`free_cash_flow`"
+                    },
+                    {
+                      "name": "roe",
+                      "expression": "`roe`"
+                    },
+                    {
+                      "name": "debt_to_equity",
+                      "expression": "`debt_to_equity`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Entity-Level Financial Detail",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "entity_name"
+                  },
+                  {
+                    "fieldName": "gics_sector"
+                  },
+                  {
+                    "fieldName": "region"
+                  },
+                  {
+                    "fieldName": "fiscal_year"
+                  },
+                  {
+                    "fieldName": "fiscal_quarter"
+                  },
+                  {
+                    "fieldName": "revenue"
+                  },
+                  {
+                    "fieldName": "gross_margin"
+                  },
+                  {
+                    "fieldName": "ebitda_margin"
+                  },
+                  {
+                    "fieldName": "net_margin"
+                  },
+                  {
+                    "fieldName": "free_cash_flow"
+                  },
+                  {
+                    "fieldName": "roe"
+                  },
+                  {
+                    "fieldName": "debt_to_equity"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 12,
+            "height": 7
           }
         }
       ],
