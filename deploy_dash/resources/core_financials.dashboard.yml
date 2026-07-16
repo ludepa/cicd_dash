@@ -1,0 +1,7 @@
+resources:
+  dashboards:
+    core_financials:
+      display_name: Core_Financials
+      file_path: ../src/Core_Financials.lvdash.json
+      warehouse_id: ${var.warehouse_id}
+      dataset_catalog: classic_stable_af2etd_catalog
