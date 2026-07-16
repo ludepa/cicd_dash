@@ -121,16 +121,16 @@
                   "datasetName": "225e5937",
                   "fields": [
                     {
-                      "name": "sum(capex)",
-                      "expression": "SUM(`capex`)"
-                    },
-                    {
                       "name": "fiscal_year",
                       "expression": "`fiscal_year`"
                     },
                     {
                       "name": "sum(revenue)",
                       "expression": "SUM(`revenue`)"
+                    },
+                    {
+                      "name": "sum(net_income)",
+                      "expression": "SUM(`net_income`)"
                     }
                   ],
                   "disaggregated": false
@@ -152,21 +152,23 @@
                   }
                 },
                 "y": {
-                  "fieldName": "sum(revenue)",
+                  "fields": [
+                    {
+                      "fieldName": "sum(revenue)"
+                    },
+                    {
+                      "fieldName": "sum(net_income)"
+                    }
+                  ],
+                  "scale": {
+                    "type": "quantitative"
+                  },
                   "format": {
                     "type": "number-currency",
                     "currencyCode": "USD",
                     "abbreviation": "compact"
-                  },
-                  "scale": {
-                    "type": "quantitative"
                   }
-                },
-                "extra": [
-                  {
-                    "fieldName": "sum(capex)"
-                  }
-                ]
+                }
               },
               "data": {
                 "queryName": "main_query"
